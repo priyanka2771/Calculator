@@ -1,68 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
   </head>
   <body>
-    <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-outline" data-cursor-outline></div>
-    <!-- <h1>CALCULATOR</h1> -->
-    <div class="container">
-      <div class="calculator">
-        <div>
-          <input type="text" placeholder="0" id="inputbox" />
-          <div id="outputbox">: 0</div>
+    <main class="app">
+      <section class="calculator" aria-label="Calculator">
+        <header class="topbar">
+          <div class="segmented" role="tablist" aria-label="Mode">
+            <button class="seg active" data-mode="basic" role="tab">Basic</button>
+            <button class="seg" data-mode="scientific" role="tab">Scientific</button>
+          </div>
+          <div class="topbar-right">
+            <button class="chip" id="angle-toggle" title="Toggle degrees / radians">DEG</button>
+            <button class="icon-btn" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">◐</button>
+            <button class="icon-btn history-open" id="history-open" title="History" aria-label="History">☰</button>
+          </div>
+        </header>
+
+        <div class="display" id="display">
+          <div class="memory-flag" id="memory-flag" hidden>M</div>
+          <div class="expression" id="expression" aria-live="polite">0</div>
+          <div class="preview" id="preview"></div>
         </div>
 
-        <div>
-          <button type="button" class="operators">AC</button>
-          <button type="button" class="operators">
-            <!-- <i class="fa fa-backspace"></i> -->Del
-          </button>
-          <button type="button" class="operators">%</button>
-          <button type="button" class="operators">/</button>
+        <div class="memory-row">
+          <button class="mem" data-act="mc">MC</button>
+          <button class="mem" data-act="mr">MR</button>
+          <button class="mem" data-act="m+">M+</button>
+          <button class="mem" data-act="m-">M−</button>
+          <button class="mem" data-act="copy">Copy</button>
         </div>
 
-        <div>
-          <button type="button">7</button>
-          <button type="button">8</button>
-          <button type="button">9</button>
-          <button type="button" class="operators">*</button>
-        </div>
-        <div>
-          <button type="button">4</button>
-          <button type="button">5</button>
-          <button type="button">6</button>
-          <button type="button" class="operators">-</button>
-        </div>
-        <div>
-          <button type="button">1</button>
-          <button type="button">2</button>
-          <button type="button">3</button>
-          <button type="button" class="operators">+</button>
-        </div>
-        <div>
-          <button type="button">x^2</button>
-          <button type="button">0</button>
-          <button type="button">.</button>
-          <button type="button" class="equal">=</button>
-        </div>
-      </div>
-      <div class="history">
-        <h2>History</h2>
+        <div class="keys" id="keys">
+          <div class="sci-keys">
+            <button class="key fn" data-v="sin(">sin</button>
+            <button class="key fn" data-v="cos(">cos</button>
+            <button class="key fn" data-v="tan(">tan</button>
+            <button class="key fn" data-v="ln(">ln</button>
+            <button class="key fn" data-v="log(">log</button>
+            <button class="key fn" data-v="sqrt(">√</button>
+            <button class="key fn" data-v="^">xʸ</button>
+            <button class="key fn" data-v="!">n!</button>
+            <button class="key fn" data-v="π">π</button>
+            <button class="key fn" data-v="e">e</button>
+            <button class="key fn" data-v="abs(">|x|</button>
+            <button class="key fn" data-v="Ans">Ans</button>
+          </div>
 
-        <ul id="history-list">
-          <!-- Calculation history will be appended here -->
-        </ul>
-      </div>
-    </div>
+          <div class="main-keys">
+            <button class="key util" data-act="ac">AC</button>
+            <button class="key util" data-act="del">⌫</button>
+            <button class="key util" data-v="(">(</button>
+            <button class="key util" data-v=")">)</button>
+
+            <button class="key" data-v="7">7</button>
+            <button class="key" data-v="8">8</button>
+            <button class="key" data-v="9">9</button>
+            <button class="key op" data-v="÷">÷</button>
+
+            <button class="key" data-v="4">4</button>
+            <button class="key" data-v="5">5</button>
+            <button class="key" data-v="6">6</button>
+            <button class="key op" data-v="×">×</button>
+
+            <button class="key" data-v="1">1</button>
+            <button class="key" data-v="2">2</button>
+            <button class="key" data-v="3">3</button>
+            <button class="key op" data-v="−">−</button>
+
+            <button class="key" data-v="0">0</button>
+            <button class="key" data-v=".">.</button>
+            <button class="key op" data-v="%">%</button>
+            <button class="key op" data-v="+">+</button>
+
+            <button class="key util" data-act="neg">±</button>
+            <button class="key util" data-v="^2">x²</button>
+            <button class="key equal wide" data-act="eq">=</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="history" id="history" aria-label="History">
+        <div class="history-head">
+          <h2>History</h2>
+          <div>
+            <button class="chip" id="history-clear">Clear</button>
+            <button class="icon-btn history-close" id="history-close" aria-label="Close">✕</button>
+          </div>
+        </div>
+        <ul id="history-list"></ul>
+        <p class="empty" id="history-empty">No calculations yet.<br />Click an entry to reuse it.</p>
+      </aside>
+    </main>
+    <div class="toast" id="toast" role="status"></div>
     <script src="script.js"></script>
   </body>
 </html>
